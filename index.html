@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canyon Creek Coffee Co | Calhoun GA | Coffee, Dirty Sodas & More</title>
+  <meta name="description" content="Cozy coffee shop in Calhoun, GA. Specialty coffee, dirty sodas, smoothies, sourdough muffins & more. Live for now. Fuel your day.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #faf8f5;
+      --fg: #2c2416;
+      --amber-50: #fffbeb;
+      --amber-100: #fef3c7;
+      --amber-200: #fde68a;
+      --amber-800: #92400e;
+      --amber-900: #78350f;
+      --stone-500: #78716c;
+      --stone-600: #57534e;
+      --stone-700: #44403c;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Source Sans 3', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--fg);
+      line-height: 1.6;
+    }
+    .font-serif { font-family: 'DM Serif Display', Georgia, serif; }
+    .container { max-width: 72rem; margin: 0 auto; padding: 0 1rem; }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .animate-in {
+      opacity: 0;
+      animation: fadeInUp 0.7s ease forwards;
+    }
+    .animate-in-delay-1 { animation-delay: 0.1s; }
+    .animate-in-delay-2 { animation-delay: 0.2s; }
+    .animate-in-delay-3 { animation-delay: 0.3s; }
+    .observe-in {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .observe-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 50;
+      background: rgba(255, 251, 235, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid rgba(253, 230, 138, 0.5);
+      transition: box-shadow 0.3s ease;
+    }
+    nav.scrolled { box-shadow: 0 4px 12px rgba(0,0,0,0.06); }
+    nav .container {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem;
+    }
+    nav .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      color: var(--amber-900);
+    }
+    nav .brand img { height: 40px; width: auto; }
+    nav .brand span { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.5rem; }
+    nav .links { display: flex; gap: 1.5rem; font-size: 0.875rem; }
+    nav a { color: var(--amber-900); text-decoration: none; font-weight: 500; transition: opacity 0.2s; }
+    nav a:hover { opacity: 0.7; }
+
+    section { padding: 5rem 0; }
+    section.hero {
+      position: relative;
+      padding-top: 0;
+      padding-bottom: 0;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+    }
+    section.hero .hero-bg {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    section.hero .hero-bg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    section.hero .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.65) 50%, rgba(0,0,0,0.75) 100%);
+    }
+    section.hero .hero-content {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 8rem 1rem 6rem;
+      width: 100%;
+    }
+    section.hero .hero-text-wrap {
+      background: rgba(0,0,0,0.45);
+      padding: 2rem 2.5rem;
+      border-radius: 1rem;
+      display: inline-block;
+      max-width: 90%;
+    }
+    section.hero .hero-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    section.hero .hero-title img { height: 80px; width: auto; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.4)); }
+    section.hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); color: white; text-shadow: 0 2px 16px rgba(0,0,0,0.6), 0 0 40px rgba(0,0,0,0.4); margin: 0; }
+    section.hero .tagline { font-size: 1.25rem; color: rgba(255,255,255,0.98); max-width: 42rem; margin: 0 auto 1.5rem; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+    section.hero .slogan { font-size: 1.5rem; color: #fef9c3; font-style: italic; margin-bottom: 2rem; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
+    .btn {
+      display: inline-block;
+      background: var(--amber-800);
+      color: var(--amber-50);
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+    .btn:hover { background: var(--amber-900); transform: translateY(-2px); }
+
+    section.menu { background: white; }
+    section.menu h2 { font-size: 2.5rem; color: var(--amber-900); text-align: center; margin-bottom: 0.5rem; }
+    section.menu > .container > .menu-subtitle { text-align: center; color: var(--stone-600); margin-bottom: 2rem; }
+    .menu-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .menu-tab {
+      padding: 0.6rem 1.25rem;
+      border: 2px solid var(--amber-200);
+      background: white;
+      color: var(--amber-900);
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 9999px;
+      transition: all 0.3s ease;
+    }
+    .menu-tab:hover { border-color: var(--amber-800); background: var(--amber-50); }
+    .menu-tab.active { background: var(--amber-800); color: white; border-color: var(--amber-800); }
+    .menu-panel { display: none; }
+    .menu-panel.active {
+      display: block;
+      animation: fadeIn 0.4s ease;
+    }
+    .menu-section h3 {
+      font-family: 'DM Serif Display', Georgia, serif;
+      font-size: 1.5rem;
+      color: var(--amber-900);
+      border-bottom: 2px solid var(--amber-200);
+      padding-bottom: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+    .menu-section ul { list-style: none; padding: 0; margin: 0; }
+    .menu-section li { display: flex; justify-content: space-between; margin-bottom: 0.75rem; }
+    .menu-section .price { color: var(--amber-800); font-weight: 500; }
+    .menu-section .sub { font-size: 0.875rem; color: var(--stone-500); margin-bottom: 0.5rem; }
+    .menu-section .addons { font-size: 0.875rem; color: var(--stone-600); margin-top: 1.5rem; }
+
+    section.about { background: var(--amber-50); }
+    section.about h2 { font-size: 2.5rem; color: var(--amber-900); text-align: center; margin-bottom: 1.5rem; }
+    section.about .container { max-width: 48rem; text-align: center; }
+    section.about p { font-size: 1.125rem; color: var(--stone-700); }
+
+    section.gallery { background: white; }
+    section.gallery h2 { font-size: 2.5rem; color: var(--amber-900); text-align: center; margin-bottom: 0.5rem; }
+    section.gallery > .container > p { text-align: center; color: var(--stone-600); margin-bottom: 3rem; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    .gallery-grid img {
+      width: 100%;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      border-radius: 0.5rem;
+      box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+    .gallery-grid img:hover { transform: scale(1.02); box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.15); }
+
+    section.follow { background: var(--amber-50); }
+    section.follow h2 { font-size: 2.5rem; color: var(--amber-900); text-align: center; margin-bottom: 0.5rem; }
+    section.follow > .container > p { text-align: center; color: var(--stone-600); margin-bottom: 3rem; }
+    .social-embeds {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .social-embed-card {
+      background: white;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .social-embed-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.12); }
+    .social-embed-card .embed-header {
+      padding: 1rem 1.25rem;
+      background: var(--amber-800);
+      color: white;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .social-embed-card .embed-body {
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .social-embed-card .embed-body iframe { border: none; width: 100%; min-height: 400px; }
+    .instagram-feed-link {
+      display: block;
+      padding: 2rem;
+      text-align: center;
+      text-decoration: none;
+      color: var(--amber-900);
+    }
+    .instagram-feed-link:hover { background: var(--amber-50); }
+    .instagram-feed-link .icon { font-size: 2.5rem; margin-bottom: 0.5rem; }
+    .instagram-feed-link .handle { font-weight: 600; font-size: 1.125rem; }
+    .instagram-feed-link .cta { font-size: 0.875rem; color: var(--stone-600); margin-top: 0.25rem; }
+
+    section.location { background: white; }
+    section.location h2 { font-size: 2.5rem; color: var(--amber-900); text-align: center; margin-bottom: 0.5rem; }
+    section.location p { text-align: center; font-size: 1.25rem; color: var(--stone-700); margin-bottom: 1.5rem; }
+    section.location .container { text-align: center; }
+
+    section.contact { background: var(--amber-50); }
+    section.contact h2 { font-size: 2.5rem; color: var(--amber-900); text-align: center; margin-bottom: 3rem; }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+      max-width: 48rem;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .contact-grid h3 { font-family: 'DM Serif Display', Georgia, serif; font-size: 1.25rem; color: var(--amber-900); margin-bottom: 1rem; }
+    footer {
+      padding: 2rem;
+      background: var(--amber-900);
+      color: #fef3c7;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <nav id="nav">
+    <div class="container">
+      <a href="#" class="brand">
+        <img src="public/logo.png" alt="Canyon Creek Coffee Co">
+        <span>Canyon Creek</span>
+      </a>
+      <div class="links">
+        <a href="#menu">Menu</a>
+        <a href="#about">About</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#location">Location</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-bg">
+      <img src="public/image-70820801-88d9-4ac0-a2a3-ba231e3ac8be.png" alt="Canyon Creek Coffee interior">
+    </div>
+    <div class="hero-content">
+      <div class="hero-text-wrap">
+        <div class="hero-title animate-in">
+          <img src="public/logo.png" alt="">
+          <h1 class="font-serif">Canyon Creek Coffee & Co</h1>
+        </div>
+        <p class="tagline animate-in animate-in-delay-1">Cozy coffee shop in Calhoun, GA. Specialty drinks, dirty sodas, smoothies, sourdough muffins & more</p>
+        <p class="font-serif slogan animate-in animate-in-delay-2">Live for now. Fuel your day.</p>
+        <a href="#menu" class="btn animate-in animate-in-delay-3">View Menu</a>
+      </div>
+    </div>
+  </section>
+
+  <section id="menu" class="menu">
+    <div class="container">
+      <h2 class="font-serif observe-in">Our Menu</h2>
+      <p class="menu-subtitle observe-in">Coffee, dirty sodas, smoothies, teas & more</p>
+      <div class="menu-tabs observe-in">
+        <button class="menu-tab active" data-tab="drinks">Drinks</button>
+        <button class="menu-tab" data-tab="noncoffee">Non-Coffee</button>
+        <button class="menu-tab" data-tab="dirtysodas">Dirty Sodas</button>
+        <button class="menu-tab" data-tab="teas">Teas</button>
+        <button class="menu-tab" data-tab="baked">Baked Goods</button>
+      </div>
+      <div class="menu-panels">
+        <div id="panel-drinks" class="menu-panel active">
+          <div class="menu-section">
+            <h3>Drinks</h3>
+            <p class="sub">16oz / 24oz</p>
+            <ul>
+              <li><span>Americano</span><span class="price">$3.25 / $3.75</span></li>
+              <li><span>Latte</span><span class="price">$4.25 / $4.75</span></li>
+              <li><span>Cappuccino</span><span class="price">$4.25 / $4.75</span></li>
+              <li><span>Chai Latte</span><span class="price">$4.25 / $4.75</span></li>
+              <li><span>Matcha Latte</span><span class="price">$4.25 / $4.75</span></li>
+              <li><span>Hot Chocolate</span><span class="price">$3.25 / $3.75</span></li>
+              <li><span>Ready-made Drip</span><span class="price">$3.25 / $3.75</span></li>
+            </ul>
+            <p class="addons">Add-ons: Oatmilk / Almond milk $0.75 · Cold Foam $1.25</p>
+          </div>
+        </div>
+        <div id="panel-noncoffee" class="menu-panel">
+          <div class="menu-section">
+            <h3>Smoothies</h3>
+            <p class="sub">Strawberry, Strawberry Banana, Mango, Peach, Berry, Berry Moose</p>
+            <p class="price">$6.25 / $7.00 (16oz / 24oz)</p>
+          </div>
+          <div class="menu-section" style="margin-top:2rem">
+            <h3>Frappes</h3>
+            <p class="sub">Peanut Butter, White Choc, Mocha, Cream, Hot Choc</p>
+            <p class="price">$6.25 / $7.00 (16oz / 24oz)</p>
+          </div>
+        </div>
+        <div id="panel-dirtysodas" class="menu-panel">
+          <div class="menu-section">
+            <h3>Dirty Sodas</h3>
+            <p class="sub">All 24oz — $6.00</p>
+            <ul>
+              <li><strong>Pineapple Passionate</strong> — Sprite + pineapple + cream + cold foam</li>
+              <li><strong>Cherry Cowpoke</strong> — Dr. Pepper + cherry + cream + cold foam</li>
+              <li><strong>Blue Malibu</strong> — Sprite + blue raspberry + cream + cold foam</li>
+              <li><strong>Strawberry Sunset</strong> — Dr. Pepper + strawberry + cream + cold foam</li>
+              <li><strong>Georgia Peach</strong> — Sprite + peach + cream + cold foam</li>
+              <li><strong>Lucky Lime</strong> — Coke + lime + cream + cold foam</li>
+            </ul>
+          </div>
+        </div>
+        <div id="panel-teas" class="menu-panel">
+          <div class="menu-section">
+            <h3>Teas</h3>
+            <p class="sub">16oz / 24oz — $3.25 / $3.75</p>
+            <ul>
+              <li>Green Tea</li>
+              <li>Black Tea</li>
+              <li>Toasted Coconut Almond</li>
+              <li>Country Peach</li>
+              <li>Vanilla Chai</li>
+              <li>Lemon Ginger</li>
+              <li>Raspberry Black Tea</li>
+            </ul>
+            <p class="addons">Sweeteners: Honey, Sugar, or Agave $0.75</p>
+          </div>
+        </div>
+        <div id="panel-baked" class="menu-panel">
+          <div class="menu-section">
+            <h3>Baked Goods</h3>
+            <ul>
+              <li><span>Sourdough Muffins</span><span class="price">$3.75</span></li>
+            </ul>
+            <p class="sub">Blueberry · Raspberry White Choc · Double Chocolate · Blueberry Lemon</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="about">
+    <div class="container">
+      <h2 class="font-serif observe-in">About Us</h2>
+      <p class="observe-in">Canyon Creek Coffee & Co is a cozy, laid-back coffee shop in Calhoun, Georgia. We opened our doors on Valentine's Day 2026 and offer quality coffee, dirty sodas, smoothies, teas, and fresh-baked sourdough muffins. Our space combines rustic-industrial charm with comfortable seating—perfect for working, catching up with friends, or simply enjoying a great cup of coffee. <span class="font-serif" style="font-style:italic;color:var(--amber-800)">Live for now. Fuel your day.</span></p>
+    </div>
+  </section>
+
+  <section id="gallery" class="gallery">
+    <div class="container">
+      <h2 class="font-serif observe-in">Photo Gallery</h2>
+      <p class="observe-in">A peek inside Canyon Creek Coffee & Co</p>
+      <div class="gallery-grid">
+        <img src="public/image-70820801-88d9-4ac0-a2a3-ba231e3ac8be.png" alt="Canyon Creek Coffee interior - counter and menu" class="observe-in">
+        <img src="public/image-f51e5b44-e94b-4167-8495-037ea9a78a36.png" alt="Canyon Creek Coffee counter and staff" class="observe-in">
+        <img src="public/image-b7b45776-ff8b-4100-8cf6-e11977128014.png" alt="Fresh muffins - blueberry, raspberry white chocolate, double chocolate" class="observe-in">
+        <img src="public/image-92eeb7ac-35ee-4f80-bf40-eb8d45990483.png" alt="Iced coffee with cold foam and cinnamon" class="observe-in">
+        <img src="public/image-fb05d970-2943-450d-82e1-ed907d1e0aee.png" alt="Iced coffee and streusel muffin" class="observe-in">
+        <img src="public/image-46ddb04b-800a-4182-84b1-f1665a0147f1.png" alt="Pet-friendly outdoor seating at Canyon Creek Coffee" class="observe-in">
+      </div>
+    </div>
+  </section>
+
+  <section class="follow">
+    <div class="container">
+      <h2 class="font-serif observe-in">Follow Us</h2>
+      <p class="observe-in">Stay connected for updates, specials & photos</p>
+      <div class="social-embeds">
+        <div class="social-embed-card observe-in">
+          <div class="embed-header">Facebook · Recent Posts</div>
+          <div class="embed-body">
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fprofile.php%3Fid%3D61585228966645&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true" width="340" height="500" style="border:none;overflow:hidden;max-width:100%" scrolling="yes" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+          </div>
+        </div>
+        <div class="social-embed-card observe-in">
+          <div class="embed-header">Instagram · @canyoncreek.coffeeco</div>
+          <div class="embed-body">
+            <a href="https://www.instagram.com/canyoncreek.coffeeco/" target="_blank" rel="noopener noreferrer" class="instagram-feed-link">
+              <span class="icon">📷</span>
+              <span class="handle">@canyoncreek.coffeeco</span>
+              <span class="cta">View our latest posts on Instagram →</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="location" class="location">
+    <div class="container observe-in">
+      <h2 class="font-serif">Find Us</h2>
+      <p>625 Blackwood Terr SE, Calhoun, GA 30701</p>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=625+Blackwood+Terr+SE,+Calhoun,+GA+30701" target="_blank" rel="noopener noreferrer" class="btn">Get Directions</a>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <h2 class="font-serif observe-in">Contact</h2>
+      <div class="contact-grid">
+        <div class="observe-in">
+          <h3>Hours</h3>
+          <p>Tuesday–Saturday: 8:00 AM – 6:00 PM</p>
+          <p style="font-size:0.875rem;color:var(--stone-500)">Closed Sunday & Monday</p>
+        </div>
+        <div class="observe-in">
+          <h3>Call Us</h3>
+          <p><a href="tel:+13366873719" style="color:var(--amber-800);font-weight:500;text-decoration:none">(336) 687-3719</a></p>
+        </div>
+        <div class="observe-in">
+          <h3>Email</h3>
+          <p><a href="mailto:northnoah959@gmail.com" style="color:var(--amber-800);font-weight:500;text-decoration:none">northnoah959@gmail.com</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2026 Canyon Creek Coffee & Co. Calhoun, GA.</p>
+  </footer>
+
+  <script>
+    // Menu tabs
+    document.querySelectorAll('.menu-tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.menu-tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.menu-panel').forEach(p => p.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById('panel-' + tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Scroll observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+    document.querySelectorAll('.observe-in').forEach(el => observer.observe(el));
+
+    // Nav shadow on scroll
+    window.addEventListener('scroll', () => {
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 20);
+    });
+  </script>
+</body>
+</html>

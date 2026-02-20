@@ -1,0 +1,8 @@
+node_modules/
+.DS_Store
+*.pem
+.env*
+canyon-creek-coffee/node_modules/
+canyon-creek-coffee/.next/
+canyon-creek-coffee/out/
+canyon-creek-coffee/.vercel/
